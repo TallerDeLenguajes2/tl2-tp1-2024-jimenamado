@@ -1,4 +1,4 @@
-public class InformeIndividual
+/*public class InformeIndividual
 {
     private int idCadete;
     private string nombreCadete;
@@ -65,4 +65,4 @@ public class Informe
     }
 
 
-}
+}*/

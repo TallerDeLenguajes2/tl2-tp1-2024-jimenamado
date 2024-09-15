@@ -8,11 +8,13 @@ public class Pedido{
     private string observacion;
     private Cliente cliente;
     private Estado estado;
+    private Cadete cadete;
 
     public int NroPedido { get => nroPedido; } //get: obtenemos el dato
     public string Observacion { get => observacion;}
     public Cliente Cliente { get => cliente; }
     public Estado Estado { get => estado;}
+    public Cadete Cadete { get => cadete; }
 
     public Pedido(int nroPedido, string observacion, Estado estado, string nombre, string direccion, string telefono, string datosReferenciaDireccion){
         this.nroPedido = nroPedido;
@@ -20,7 +22,6 @@ public class Pedido{
         cliente = new Cliente(nombre,direccion,telefono,datosReferenciaDireccion);
         this.estado = estado;
     }  
-
     public void cambiarEstado(Estado nuevoEstado){ //hacemos un metodo para no usar la propiedad set por que queda muy vulnerable
 
         estado = nuevoEstado;
@@ -39,6 +40,10 @@ public class Pedido{
 
     }
 
+    public void AsignarCadete(Cadete cadete)
+    {
+        this.cadete = cadete;
+    }
     
 
 }

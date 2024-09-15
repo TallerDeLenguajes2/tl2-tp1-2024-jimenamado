@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "nombre": "Rodolfo Vega",
+        "direccion": "calle Santa fe 232, Tucuman",
+        "telefono": 1233344
+    },
+    {
+        "id": 2,
+        "nombre": "Cristian Castro",
+        "direccion": "Buenos aires 233, Tucuman",
+        "telefono": 41443432
+    },
+    {
+        "id": 3,
+        "nombre": "Jose Perez",
+        "direccion": "Garmendia 343, Tucuman",
+        "telefono": 423423
+    },
+    {
+        "id": 4,
+        "nombre": "Matias Roldan",
+        "direccion": "Muñecas 456, Tucuman",
+        "telefono": 24225242
+    },
+    {
+        "id": 5,
+        "nombre": "Alejandro Lopez",
+        "direccion": "Av. roca 2345, Tucuman",
+        "telefono": 422223423
+    }
+]

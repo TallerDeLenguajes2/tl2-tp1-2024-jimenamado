@@ -6,19 +6,77 @@ public class Cadeteria
     private string nombre;
     private string telefono;
     private List<Cadete> listadoCadetes;
+    private List<Pedido> listadoPedidos;
 
     public string Nombre { get => nombre; }
     public string Telefono { get => telefono; }
     public List<Cadete> ListadoCadetes { get => listadoCadetes; }
+    public List<Pedido> ListadoPedidos { get => listadoPedidos; }
 
-    public Cadeteria(string nombre, string telefono,  List<Cadete> cadetes)
+    public Cadeteria(string nombre, string telefono, List<Cadete> cadetes)
     {
-
         this.nombre = nombre;
         this.telefono = telefono;
         listadoCadetes = cadetes;
+        listadoPedidos = new List<Pedido>();
+    }
+    public Cadeteria()
+    {
     }
 
+    public void TomarPedido(int nroPedido, string observacion, Estado estado, string nombre, string direccion, string telefono, string datosReferencia)
+    {
+        Pedido nuevoPedido = new Pedido(nroPedido, observacion, estado, direccion, nombre, telefono, datosReferencia);
+        listadoPedidos.Add(nuevoPedido);
+    }
+    public Pedido BuscarPedido(int nroPedido)
+    {
+        Pedido pedidoBuscado = listadoPedidos.Find(p => p.NroPedido == nroPedido);    //forma de recorrer la lista con una condicion
+        return pedidoBuscado;
+    }
+    public void asignarCadeteAPedido(int idCadete, int idPedido)
+    {
+        Cadete cadete = null;
+        //A1 Buscar cadete
+        foreach (var cadeteX in listadoCadetes)
+        {
+            if (cadeteX.Id == idCadete)
+            {
+                cadete = cadeteX;
+            }
+        }
+
+        //A2 verficar  que existe el cadete
+        if (cadete != null)
+        {
+            //A3 Buscar pedido
+            foreach (var pedidoX in listadoPedidos)
+            {
+                //A4 Asignar cadete
+                if (pedidoX.NroPedido == idPedido)
+                {
+                    pedidoX.AsignarCadete(cadete);
+                }
+            }
+        }
+
+    }
+    public int JornalACobrar(int idCadete)
+    {
+        int cantPedidosCadete = 0, montoACobrar;
+
+        foreach (var pedidoX in listadoPedidos)
+        {
+            if (pedidoX.Cadete.Id == idCadete)
+            {
+                cantPedidosCadete++;
+            }
+        }
+        montoACobrar = cantPedidosCadete * 500;
+
+        return montoACobrar;
+
+    }
     public Cadete BuscarCadete(int idCadete)
     {
         Cadete cadeteBuscado = null;
@@ -32,81 +90,37 @@ public class Cadeteria
         }
         return cadeteBuscado;
     }
-
-    public void asignarPedidoCadete(int idCadete, Pedido nuevoPedido)
-    {
-        foreach (var cadeteX in listadoCadetes)
-        {
-            if (idCadete == cadeteX.Id)
-            {
-                cadeteX.AgregarPedidoListado(nuevoPedido);
-            }
-        }
-    }
-
-
     public void cambiarEstado(Estado nuevoEstado, int nroPedido)
     {
-        foreach (var cadeteX in ListadoCadetes)
+
+        foreach (var pedidoX in listadoPedidos)
         {
-            foreach (var pedidoX in cadeteX.ListadoPedidos)
+            if (nroPedido == pedidoX.NroPedido)
             {
-                if (nroPedido == pedidoX.NroPedido)
-                {
-                    pedidoX.cambiarEstado(nuevoEstado);
-                }
+                pedidoX.cambiarEstado(nuevoEstado);
             }
         }
     }
-
-
-    public Pedido BuscarPedidoCadete(int nroPedido)
-    {
-
-        foreach (var cadeteX in listadoCadetes)
-        {
-            foreach (var pedidoX in cadeteX.ListadoPedidos)
-            {
-                if (nroPedido == pedidoX.NroPedido)
-                {
-                    return pedidoX;
-                }
-            }
-
-        }
-        return null;
-    }
-
     public void ReasignarCadete(int idNuevoCadete, int nroPedido)
     {
-        Pedido pedidoBuscado = BuscarPedidoCadete(nroPedido);
-        Cadete cadete2 = BuscarCadete(idNuevoCadete);
 
-        if (pedidoBuscado != null && cadete2 != null)
-        {
-            var cadete1 = BuscarCadeteXPedido(pedidoBuscado);
-            cadete1.EliminarPedidoCadete(pedidoBuscado.NroPedido);
-            cadete2.AgregarPedidoListado(pedidoBuscado);
-            
-        }
+        asignarCadeteAPedido(idNuevoCadete, nroPedido);
+
     }
 
-    private Cadete BuscarCadeteXPedido(Pedido pedido)
+    /*public void asignarPedidoCadete(int idCadete, Pedido nuevoPedido)
+   {
+   foreach (var cadeteX in listadoCadetes)
+   {
+       if (idCadete == cadeteX.Id)
+       {
+           cadeteX.AgregarPedidoListado(nuevoPedido);
+       }
+   }
+   }*/
+
+    /*public int TotalPedidosRecibidos()
     {
-        foreach (var cadeteX in listadoCadetes)
-        {
-            foreach (var pedidoX in cadeteX.ListadoPedidos)
-            {
-                if (pedidoX == pedido)
-                {
-                    return cadeteX;
-                }
-            }
-        }
-        return null;
-    }
-
-    public int TotalPedidosRecibidos(){
 
         int contadorPedidos = 0;
         foreach (var cadeteX in ListadoCadetes)
@@ -118,9 +132,10 @@ public class Cadeteria
         }
         return contadorPedidos;
     }
-    
-    public int TotalPedidosEntregados(){
-        
+
+    public int TotalPedidosEntregados()
+    {
+
         int contador = 0;
         foreach (var cadeteX in listadoCadetes)
         {
@@ -134,9 +149,9 @@ public class Cadeteria
         }
         return contador;
     }
+*/
 
-
-    }
+}
 
 
 

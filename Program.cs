@@ -4,21 +4,37 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-
-        int opcionMenu;
-        string menu;
+        int opcionMenu, opcionEntrada;
+        string menu, entrada;
         bool bandera = true;
-        PedidosTemp recepcionPedido = new PedidosTemp();
+        Cadeteria cadeteria = null;
+        AccesoADatos acceso = null;
 
-        var manejoDeArchivos = new ManejoDeArchivos();      
-        var cadetesYCadeteria = manejoDeArchivos.obtenerCadeteria(); //obtenemos cadetes y datos cadeteria
-        
-        /*
-        List<Cadete> listadoCadetes = new List<Cadete>();
-        listadoCadetes.Add(new Cadete(1, "jimena", "prospero mena", "12345", new List<Pedido>()));
-        listadoCadetes.Add(new Cadete(2, "enzo", "garmendia", "12345", new List<Pedido>()));
-        listadoCadetes.Add(new Cadete(3, "javier", "san juan", "12345", new List<Pedido>()));
-        Cadeteria cadeteria = new Cadeteria("Cadeteria","3817373",listadoCadetes);*/
+        do
+        {
+            System.Console.WriteLine("Ingrese la entrada de datos:\n1:Archivo CSV\n2:Archivo JSON");
+            entrada = Console.ReadLine();
+
+        } while (string.IsNullOrEmpty(entrada));
+
+        bool respuesta = int.TryParse(entrada, out opcionEntrada);
+
+
+        switch (opcionEntrada)
+        {
+            case 1:
+                acceso = new AccesoCSV();
+                break;
+            case 2:
+                acceso = new AccesoJSON();
+                break;
+
+            default:
+                System.Console.WriteLine("Opcion invalida");
+                break;
+        }
+
+        cadeteria = acceso.ObtenerCadeteria();
 
         while (bandera)
         {
@@ -68,7 +84,7 @@ internal class Program
                         System.Console.WriteLine("Datos de referencia:");
                         datosReferenciaDireccion = Console.ReadLine();
 
-                        recepcionPedido.TomarPedido(nroPedido, observacion, Estado.pendiente, nombre, direccion, telefono, datosReferenciaDireccion);
+                        cadeteria.TomarPedido(nroPedido, observacion, Estado.pendiente, nombre, direccion, telefono, datosReferenciaDireccion);
 
                         break;
                     case 2:
@@ -86,10 +102,10 @@ internal class Program
 
                         if (result && result1)
                         {
-                           Pedido pedidoBuscado = recepcionPedido.BuscarPedido(nroPedidoBuscar);
-                           cadetesYCadeteria.asignarPedidoCadete(idCadete,pedidoBuscado);
-                           recepcionPedido.EliminarPedidoTemp(pedidoBuscado);
-                        }else
+                            cadeteria.asignarCadeteAPedido(idCadete, nroPedidoBuscar);
+
+                        }
+                        else
                         {
                             System.Console.WriteLine("no se puedo asignar");
                         }
@@ -97,20 +113,21 @@ internal class Program
                     case 3:
                         string nuevoEstado, inputPed;
                         int nroPedidoCambiar, opcionEstado;
-                        
+
                         System.Console.WriteLine("Ingrese el numero de pedido a cambiar");
                         inputPed = Console.ReadLine();
                         bool result2 = int.TryParse(inputPed, out nroPedidoCambiar);
 
                         System.Console.WriteLine("Seleccione el nuevo estado:\n1:Entregado\n2:Cancelado");
                         nuevoEstado = Console.ReadLine();
-                        bool result3 = int.TryParse(nuevoEstado,out opcionEstado);
+                        bool result3 = int.TryParse(nuevoEstado, out opcionEstado);
 
-                        if (result2 && result3 && opcionEstado >= 1 && opcionEstado <=3 )
+                        if (result2 && result3 && opcionEstado >= 1 && opcionEstado <= 3)
                         {
                             Estado nuevoestado = (Estado)opcionEstado; //casteamos el entero por el enum
-                            cadetesYCadeteria.cambiarEstado(nuevoestado,nroPedidoCambiar);
-                        }else
+                            cadeteria.cambiarEstado(nuevoestado, nroPedidoCambiar);
+                        }
+                        else
                         {
                             System.Console.WriteLine("No se pudo modificar el estado");
                         }
@@ -130,22 +147,23 @@ internal class Program
 
                         if (result4 && result5)
                         {
-                            cadetesYCadeteria.ReasignarCadete(idCadeteAsignar,nroPedidoAsignar);
-                        }else
+                            cadeteria.ReasignarCadete(idCadeteAsignar, nroPedidoAsignar);
+                        }
+                        else
                         {
                             System.Console.WriteLine("No se pudo reasignar el pedido al nuevo cadete");
                         }
                         break;
-                        case 5:
-                            bandera = false;
-                            break;
+                    case 5:
+                        bandera = false;
+                        break;
                 }
             }
 
         }
 
-        Informe informeFinal = new Informe(cadetesYCadeteria.ListadoCadetes);
-        informeFinal.Mostrar();
+        /*Informe informeFinal = new Informe(cadeteria.ListadoCadetes);
+        informeFinal.Mostrar();*/
 
     }
 }
