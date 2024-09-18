@@ -31,7 +31,7 @@ public class Pedido{
 
         return Cliente.Direccion;
     } 
-    public void verDatosCliente(){
+    public void VerDatosCliente(){
 
         System.Console.WriteLine("Nombre Cliente:"+Cliente.Nombre);
         System.Console.WriteLine("Direccion:"+Cliente.Direccion);
@@ -44,6 +44,7 @@ public class Pedido{
     {
         this.cadete = cadete;
     }
+    
     
 
 }

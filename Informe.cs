@@ -1,68 +1,33 @@
-/*public class InformeIndividual
-{
-    private int idCadete;
-    private string nombreCadete;
-    private int cantidadPedidosRecibidos;
-    private int cantidadPedidosEnviadosCadete;
-    private float promedio;
-
-    public int IdCadete { get => idCadete;}
-    public string NombreCadete { get => nombreCadete;}
-    public int CantidadPedidosRecibidos { get => cantidadPedidosRecibidos;}
-    public int CantidadPedidosEnviadosCadete { get => cantidadPedidosEnviadosCadete;}
-    public float Promedio { get => promedio;}
-
-    public InformeIndividual(Cadete cadete)
-    {
-        idCadete = cadete.Id;
-        nombreCadete = cadete.Nombre;
-        cantidadPedidosRecibidos = cadete.CantidadPedidosRecibidosCadete();
-        cantidadPedidosEnviadosCadete = cadete.CantidadPedidosEnviadosCadete();
-        promedio = cadete.PromedioPedidosCadete();
-    }
-
-    public void MostrarInformeIndividual()
-    {
-        System.Console.WriteLine($"Id:{idCadete}");
-        System.Console.WriteLine($"Nombre:{nombreCadete}");
-        System.Console.WriteLine($"Pedidos Recibidos:{cantidadPedidosRecibidos}");
-        System.Console.WriteLine($"Pedidos Enviados:{cantidadPedidosEnviadosCadete}");
-        System.Console.WriteLine($"Promedio Pedidos entregados:{promedio}");
-
-    }
-}
+using ServicioCadeteria;
 public class Informe
 {
-    private List<Cadete> cadetes;
-    private int jornalAPagar;
+    private int cantidadPedidos;
+    private int cantidadPedidosEntregados;
+    private int cantidadPedidosCancelados;
+    private int totalSueldo;
 
-    public Informe(List<Cadete> cadetes)
+    public Informe(Cadeteria cadeteria)
     {
-        this.cadetes = cadetes;
+        cantidadPedidos = cadeteria.TotalPedidosRecibidos();
+        cantidadPedidosEntregados = cadeteria.TotalPedidosEntregados();
+        cantidadPedidosCancelados = cadeteria.TotalPedidosCancelados();
+        totalSueldo = cadeteria.TotalPagoSueldo();
     }
 
-    public List<InformeIndividual> GenerarListaDeDatos()
-    {
-        List<InformeIndividual> listaInforme = new List<InformeIndividual>();
+    public int CantidadPedidos { get => cantidadPedidos; }
+    public int CantidadPedidosEntregados { get => cantidadPedidosEntregados;}
+    public int CantidadPedidosCancelados { get => cantidadPedidosCancelados; }
+    public int TotalSueldo { get => totalSueldo;}
 
-        foreach (var cadeteX in cadetes)
-        {
-            var informeCadete = new InformeIndividual(cadeteX);
-            listaInforme.Add(informeCadete);
-        }
-        return listaInforme;
-    }
 
     public void Mostrar(){
 
-        var listadoGral = GenerarListaDeDatos();
-
-        System.Console.WriteLine("---------- Informe -------");
-        foreach (var elementoX in listadoGral)
-        {
-            elementoX.MostrarInformeIndividual();
-        }
+        System.Console.WriteLine("-----Informe FIN DE JORNADA - Cadeteria Ros----");
+        System.Console.WriteLine("Total Pedidos recibidos:"+cantidadPedidos);
+        System.Console.WriteLine("Total Pedidos Enviados:"+cantidadPedidosEntregados);
+        System.Console.WriteLine("Total Pedidos Cancelados:"+cantidadPedidosCancelados);
+        System.Console.WriteLine("Total sueldos a pagar:"+totalSueldo);
+        System.Console.WriteLine("-----------------");
+        
     }
-
-
-}*/
+}

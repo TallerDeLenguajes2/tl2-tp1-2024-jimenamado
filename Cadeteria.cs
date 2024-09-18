@@ -61,7 +61,7 @@ public class Cadeteria
         }
 
     }
-    public int JornalACobrar(int idCadete)
+    public int JornalAPagarCadete(int idCadete)
     {
         int cantPedidosCadete = 0, montoACobrar;
 
@@ -75,7 +75,15 @@ public class Cadeteria
         montoACobrar = cantPedidosCadete * 500;
 
         return montoACobrar;
+    }
+    public int TotalPagoSueldo(){
 
+        int montoAcumulado=0;
+        foreach (var cadeteX in listadoCadetes)
+        {
+            montoAcumulado = montoAcumulado + JornalAPagarCadete(cadeteX.Id);
+        }
+        return montoAcumulado;
     }
     public Cadete BuscarCadete(int idCadete)
     {
@@ -108,28 +116,15 @@ public class Cadeteria
 
     }
 
-    /*public void asignarPedidoCadete(int idCadete, Pedido nuevoPedido)
-   {
-   foreach (var cadeteX in listadoCadetes)
-   {
-       if (idCadete == cadeteX.Id)
-       {
-           cadeteX.AgregarPedidoListado(nuevoPedido);
-       }
-   }
-   }*/
-
-    /*public int TotalPedidosRecibidos()
+    public int TotalPedidosRecibidos()
     {
-
         int contadorPedidos = 0;
-        foreach (var cadeteX in ListadoCadetes)
+
+        foreach (var pedidoX in listadoPedidos)
         {
-            foreach (var pedidoX in cadeteX.ListadoPedidos)
-            {
-                contadorPedidos++;
-            }
+            contadorPedidos++;
         }
+
         return contadorPedidos;
     }
 
@@ -137,20 +132,26 @@ public class Cadeteria
     {
 
         int contador = 0;
-        foreach (var cadeteX in listadoCadetes)
+
+        foreach (var pedidoX in listadoPedidos)
         {
-            foreach (var pedidoX in cadeteX.ListadoPedidos)
+            if (pedidoX.Estado == Estado.entregado)
             {
-                if (pedidoX.Estado == Estado.entregado)
-                {
-                    contador++;
-                }
+                contador++;
             }
         }
+
         return contador;
     }
-*/
 
+    public int TotalPedidosCancelados(){
+
+        int totalPedidos = TotalPedidosRecibidos();
+        int totalEnviados = TotalPedidosEntregados();
+        int totalCancelados = totalPedidos - totalEnviados;
+
+        return totalCancelados;
+    }
 }
 
 

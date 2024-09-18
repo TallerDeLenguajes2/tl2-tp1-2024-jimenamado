@@ -2,7 +2,6 @@ using System.Text.Json.Nodes;
 using ServicioCadeteria;
 using System.Text.Json;
 
-
 public abstract class AccesoADatos
 {
     protected string rutaCadetes;
@@ -33,9 +32,7 @@ public abstract class AccesoADatos
 
 public class AccesoCSV : AccesoADatos   //clase derivada de la clase base AccesoADatos
 {
-
-
-    public AccesoCSV() : base("Cadeteria.csv", "Cadetes.csv") // le doy valor a las variables heredadas de la clase base
+    public AccesoCSV() : base("Cadetes.csv", "Cadeteria.csv") // le doy valor a las variables heredadas de la clase base
     {
 
     }
@@ -46,12 +43,12 @@ public class AccesoCSV : AccesoADatos   //clase derivada de la clase base Acceso
 
         if (ExisteArchivo(rutaCadetes))
         {
-            using (var infoCadeteStream = new StreamReader(rutaCadetes))
+            using (var infoCadeteStream = new StreamReader(rutaCadetes))//leer archivo y guardarlo
             {
-                while (!infoCadeteStream.EndOfStream)    //leer archivo y guardarlo
+                while (!infoCadeteStream.EndOfStream)    //no sea el final del flujo archivo
                 {
                     string linea = infoCadeteStream.ReadLine(); //leer archivos línea por línea y guardamos en un string
-                    string[] datosCadete = linea.Split(';');    //separamos y guardamos cada linea en un arreglo
+                    string[] datosCadete = linea.Split(';');    //separamos y guardamos la linea en un arreglo
 
                     int id = int.Parse(datosCadete[0]);
                     string nombre = datosCadete[1];
@@ -66,7 +63,7 @@ public class AccesoCSV : AccesoADatos   //clase derivada de la clase base Acceso
         return cadetes;
     }
 
-    /*public override Cadeteria ObtenerCadeteria()
+    public override Cadeteria ObtenerCadeteria()
     {
         Cadeteria cadeteria = null;
 
@@ -81,26 +78,11 @@ public class AccesoCSV : AccesoADatos   //clase derivada de la clase base Acceso
             cadeteria = new Cadeteria(nombre, telefono, cadetes);
         }
         return cadeteria;
-    }*/
-    
-      public override Cadeteria ObtenerCadeteria(){
-
-        Cadeteria cadeteria = null;
-
-        if (ExisteArchivo(rutaCadeteria))
-        {
-            string[] textoArchivo = File.ReadAllLines(rutaCadeteria);
-            string primeraLinea = textoArchivo[0];
-            string[] datosCadeteria = primeraLinea.Split(';');
-            string nombre = datosCadeteria[0];
-            string telefono = datosCadeteria[1];
-            List<Cadete> cadetes = ObtenerCadetes();
-            
-            cadeteria = new Cadeteria(nombre, telefono,cadetes);
-        }
-        return cadeteria;
     }
+    
 }
+
+
 public class AccesoJSON : AccesoADatos
 {
     public AccesoJSON():base("Cadetes.json","Cadeteria.json")

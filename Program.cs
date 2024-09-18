@@ -161,9 +161,7 @@ internal class Program
             }
 
         }
-
-        /*Informe informeFinal = new Informe(cadeteria.ListadoCadetes);
-        informeFinal.Mostrar();*/
-
+        Informe informeFinal = new Informe(cadeteria);
+        informeFinal.Mostrar();
     }
 }
