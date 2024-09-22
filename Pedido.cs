@@ -31,14 +31,18 @@ public class Pedido{
 
         return Cliente.Direccion;
     } 
-    public void VerDatosCliente(){
+
+    public Pedido GetPedido(Pedido pedido){
+        return pedido;
+    }
+    /*public void VerDatosCliente(){
 
         System.Console.WriteLine("Nombre Cliente:"+Cliente.Nombre);
         System.Console.WriteLine("Direccion:"+Cliente.Direccion);
         System.Console.WriteLine("Telefono:"+Cliente.Telefono);
         System.Console.WriteLine("Datos Referencia:"+Cliente.DatosReferenciaDireccion);
 
-    }
+    }*/
 
     public void AsignarCadete(Cadete cadete)
     {

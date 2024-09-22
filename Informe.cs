@@ -19,8 +19,12 @@ public class Informe
     public int CantidadPedidosCancelados { get => cantidadPedidosCancelados; }
     public int TotalSueldo { get => totalSueldo;}
 
+    public Informe GetInforme(Informe datos){
 
-    public void Mostrar(){
+        return datos;
+        
+    }
+   /* public void Mostrar(){
 
         System.Console.WriteLine("-----Informe FIN DE JORNADA - Cadeteria Ros----");
         System.Console.WriteLine("Total Pedidos recibidos:"+cantidadPedidos);
@@ -28,6 +32,5 @@ public class Informe
         System.Console.WriteLine("Total Pedidos Cancelados:"+cantidadPedidosCancelados);
         System.Console.WriteLine("Total sueldos a pagar:"+totalSueldo);
         System.Console.WriteLine("-----------------");
-        
-    }
+    }*/
 }

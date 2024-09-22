@@ -130,7 +130,6 @@ public class Cadeteria
 
     public int TotalPedidosEntregados()
     {
-
         int contador = 0;
 
         foreach (var pedidoX in listadoPedidos)
@@ -140,7 +139,6 @@ public class Cadeteria
                 contador++;
             }
         }
-
         return contador;
     }
 

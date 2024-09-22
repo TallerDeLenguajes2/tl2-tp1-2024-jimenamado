@@ -161,7 +161,17 @@ internal class Program
             }
 
         }
+        MostrarInforme(cadeteria);
+    }
+
+    private static void MostrarInforme(Cadeteria cadeteria)
+    {
         Informe informeFinal = new Informe(cadeteria);
-        informeFinal.Mostrar();
+        System.Console.WriteLine("-----Informe FIN DE JORNADA - Cadeteria Ros----");
+        System.Console.WriteLine("Total Pedidos recibidos:" + informeFinal.CantidadPedidos);
+        System.Console.WriteLine("Total Pedidos Enviados:" + informeFinal.CantidadPedidosEntregados);
+        System.Console.WriteLine("Total Pedidos Cancelados:" + informeFinal.CantidadPedidosCancelados);
+        System.Console.WriteLine("Total sueldos a pagar:" + informeFinal.TotalSueldo);
+        System.Console.WriteLine("-----------------");
     }
 }
